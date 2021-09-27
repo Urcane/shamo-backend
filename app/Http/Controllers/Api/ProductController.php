@@ -21,7 +21,7 @@ class ProductController extends Controller
         $price_from = $request->price_from;
         $price_to = $request->price_to;
 
-        $product = Product::with(['category', 'galerries']);
+        $product = Product::with(['category', 'productGallery']);
 
         if ($id) {
             $product = $product->find($id);
