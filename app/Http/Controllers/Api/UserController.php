@@ -18,8 +18,8 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:225'],
             'username' => ['required', 'string', 'max:225', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:225', 'unique:users'],
-            'phone_number' => ['required', 'string', 'max:225', 'unique:users'],
-            'password' => ['required', 'confirmed','string', new Password],
+            'phone_number' => ['nullable', 'string', 'max:225', 'unique:users'],
+            'password' => ['required', 'confirmed','string', new Password, 'min:8'],
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -49,7 +49,7 @@ class UserController extends Controller
         } catch (\Exception $err) {
             return ResponseFormatter::error([
                 'error' => $err
-            ], 'User Gagal di registrasi 💥 ');
+            ], 'Oh No, Something went wrong 💥. Please Contact our Support', 500);
         }
     }
 }
