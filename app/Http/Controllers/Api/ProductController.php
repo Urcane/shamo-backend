@@ -12,7 +12,7 @@ class ProductController extends Controller
     public function all(Request $request)
     {
         $id = $request->id;
-        $limit = $request->limit;
+        $limit = $request->input('limit', 6);
         $name = $request->name;
         $description = $request->description;
         $tags = $request->tags;
