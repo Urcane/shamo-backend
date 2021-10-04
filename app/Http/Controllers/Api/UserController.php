@@ -30,7 +30,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return ResponseFormatter::error([
-                'error_messages' => $validator->errors()
+                'message' => $validator->errors()
             ], 'Validation Error 🗡 ', 422);
         }
         
@@ -68,7 +68,7 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return ResponseFormatter::error([
-                'error_messages' => $validator->errors()
+                'message' => $validator->errors()
             ], 'Validation Error 🗡 ', 422);
         }
 
@@ -105,5 +105,29 @@ class UserController extends Controller
     public function fetch(Request $request)
     {
         return ResponseFormatter::success($request->user(), "Authenticanted 🚀 ");
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $data = $request->all();
+        
+        try {
+            $user = Auth::user();
+            $user->update($data);
+    
+            return ResponseFormatter::success($user, 'Data berhasil di perbarui 🚀 ');
+        } catch (\Exception $err) {
+            return ResponseFormatter::success([
+                'message' => 'Upss, ada yang salah nih',
+                'error' => $err
+            ], 'Upss, ada yang salah nih 💥 ', 500);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $token = $request->user()->currentAccessToken()->delete();
+
+        return ResponseFormatter::success($token, "Berhasil Logout");
     }
 }
