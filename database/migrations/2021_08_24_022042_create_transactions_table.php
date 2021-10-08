@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->text('address')->nullable();
             $table->float('total_price')->default(0);
             $table->float('shipping_price')->default(0);
-            $table->enum('status', ['PENDING', 'DELIVERED'])->default('PENDING');
+            $table->enum('status', ['PENDING', 'SUCCESS', 'CANCELLED', 'FAILED', 'SHIPPING', 'DELIVERED'])->default('PENDING');
             $table->enum('payment', ['MANUAL', 'TRANSFER'])->default('MANUAL');
             $table->softDeletes();
             $table->timestamps();
